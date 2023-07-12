@@ -4,3 +4,9 @@
 /.idea/
 /.gradle
 /.gradle/
+/android/build
+/android/build/
+/desktop/build
+/desktop/build/
+/common/build
+/common/build/
