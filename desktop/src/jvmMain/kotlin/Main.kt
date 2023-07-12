@@ -11,7 +11,7 @@ import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.extensions.compose.jetbrains.lifecycle.LifecycleController
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import com.davidmatillacode.common.composeui.MainContent
+import io.github.xxfast.decompose.LocalComponentContext
 
 fun main() {
     val lifecycle = LifecycleRegistry()
@@ -29,7 +29,7 @@ fun main() {
         ) {
             Surface(modifier = Modifier.fillMaxSize()) {
                 MaterialTheme {
-                    CompositionLocalProvider(LocalScrollbarStyle provides defaultScrollbarStyle()) {
+                    CompositionLocalProvider(LocalComponentContext provides rootComponentContext) {
                         MainContent()
                     }
                 }

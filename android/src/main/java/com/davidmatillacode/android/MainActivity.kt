@@ -7,7 +7,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.defaultComponentContext
-import com.davidmatillacode.common.composeui.MainContent
 import io.github.xxfast.decompose.LocalComponentContext
 
 class MainActivity : AppCompatActivity() {
