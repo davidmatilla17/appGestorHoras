@@ -1,8 +1,6 @@
-import org.jetbrains.compose.compose
-
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version "1.1.0"
+    id("org.jetbrains.compose") version "1.4.0"
     id("com.android.library")
 }
 
@@ -22,6 +20,9 @@ kotlin {
                 api(compose.runtime)
                 api(compose.foundation)
                 api(compose.material)
+                implementation ("com.arkivanov.decompose:decompose:1.0.0")
+                implementation("io.github.xxfast:decompose-router:0.3.0")
+
             }
         }
         val commonTest by getting {
@@ -50,14 +51,15 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdkVersion(34)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdkVersion(24)
-        targetSdkVersion(31)
+        targetSdkVersion(34)
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+    namespace = "com.davidmatillacode.common"
 }

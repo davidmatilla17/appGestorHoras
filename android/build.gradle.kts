@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.compose") version "1.1.0"
+    id("org.jetbrains.compose") version "1.4.0"
     id("com.android.application")
     kotlin("android")
 }
@@ -14,24 +14,28 @@ repositories {
 dependencies {
     implementation(project(":common"))
     implementation("androidx.activity:activity-compose:1.4.0")
+    implementation ("com.arkivanov.decompose:decompose:1.0.0")
+    implementation ("com.arkivanov.decompose:extensions-compose-jetpack:1.0.0")
+    implementation("io.github.xxfast:decompose-router:0.3.0")
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdkVersion(34)
     defaultConfig {
         applicationId = "com.davidmatillacode.android"
         minSdkVersion(24)
-        targetSdkVersion(31)
+        targetSdkVersion(34)
         versionCode = 1
         versionName = "1.0"
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
         }
     }
+    namespace = "com.davidmatillacode.android"
 }
