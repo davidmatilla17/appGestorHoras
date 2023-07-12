@@ -2,6 +2,7 @@ plugins {
     id("org.jetbrains.compose") version "1.4.0"
     id("com.android.application")
     kotlin("android")
+    id ("kotlin-parcelize")
 }
 
 group = "com.davidmatillacode"
