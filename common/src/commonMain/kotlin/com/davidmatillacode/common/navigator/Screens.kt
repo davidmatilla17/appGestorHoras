@@ -14,9 +14,9 @@ sealed class Screens : Parcelable {
     data class Details(val text: String) : Screens()
 }
 @Composable
-fun getScreen(type : Screens,router: Router<Screens>){
+fun getScreen(type : Screens,router: Router<Screens>,width : Int, height : Int){
     when(type){
-        is Screens.List -> ListScreen(router)
-        is Screens.Details -> DetailScreen(router)
+        is Screens.List -> ListScreen(router,width,height)
+        is Screens.Details -> DetailScreen("",router,width, height)
     }
 }

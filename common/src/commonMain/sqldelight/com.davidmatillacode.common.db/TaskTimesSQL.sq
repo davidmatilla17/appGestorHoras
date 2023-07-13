@@ -1,0 +1,22 @@
+CREATE TABLE TaskTimes (
+    id_task INTEGER,
+    start_time TEXT NOT NULL,
+    end_time TEXT NOT NULL,
+    state TEXT NOT NULL,
+    FOREIGN KEY (id_task) REFERENCES Task(id_task)
+);
+
+selectAll:
+SELECT * FROM TaskTimes;
+
+getTaskTimes:
+SELECT * FROM TaskTimes WHERE id_task = :id;
+
+insertTaskTimes:
+INSERT OR REPLACE INTO TaskTimes(id_task,start_time,start_time,end_time,state) VALUES (?,?,?,?,?);
+
+upadteTaskTimesState:
+UPDATE TaskTimes SET state = :state WHERE id_task = :id_task AND start_time = :start_time AND end_time = :end_time;
+
+deleteTaskTimes:
+DELETE FROM TaskTimes WHERE id_task = :id_task;

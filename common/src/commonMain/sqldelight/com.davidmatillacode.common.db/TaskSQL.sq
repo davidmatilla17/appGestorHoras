@@ -1,0 +1,25 @@
+CREATE TABLE Task (
+    id_task INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    id_project INTEGER NOT NULL,
+    stimated_time INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    FOREIGN KEY (id_project) REFERENCES Project(id_project)
+);
+
+selectAll:
+SELECT * FROM  Task;
+selectTaskByFilters:
+SELECT Project.id_project , Project.description , Task.id_task, Task.description FROM Project
+    JOIN Task ON Task.id_project = Project.id_project
+    JOIN ProjectTags ON ProjectTags.id_project = Project.id_project
+    JOIN TaskTags ON TaskTags.id_task = Task.id_task
+    JOIN Tag ON ProjectTags.id_tag = Tag.id_tag
+WHERE (ProjectTags.id_tag IN (:TagList) OR TaskTags.id_tag IN (:TagList))
+    AND (Project.description LIKE "%"+ :description +"%" OR Task.description LIKE "%"+ :description +"%" )
+GROUP BY Project.id_project;
+
+insertTask:
+INSERT OR REPLACE INTO Task(id_project,description,stimated_time) VALUES (?,?,?);
+
+deleteTask:
+DELETE FROM Task WHERE id_task = :id;

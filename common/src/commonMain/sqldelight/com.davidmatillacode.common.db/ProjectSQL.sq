@@ -1,0 +1,19 @@
+CREATE TABLE Project (
+  id_project INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  description TEXT NOT NULL
+);
+
+selectAll:
+SELECT * FROM  Project;
+selectProjectByFilters:
+SELECT Project.id_project , Project.description FROM Project
+JOIN ProjectTags ON ProjectTags.id_project = Project.id_project
+JOIN Tag ON ProjectTags.id_tag = Tag.id_tag
+WHERE ProjectTags.id_tag IN (:LIST) AND Project.description LIKE "%"+ :description +"%"
+GROUP BY Project.id_project;
+
+insertProject:
+INSERT OR REPLACE INTO Project(description) VALUES (?);
+
+deleteProject:
+DELETE FROM Project WHERE id_project = :id;

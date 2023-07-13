@@ -3,6 +3,14 @@ plugins {
     id("org.jetbrains.compose") version "1.4.0"
     id("com.android.library")
     id ("kotlin-parcelize")
+    id("app.cash.sqldelight") version "2.0.0-rc01"
+}
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("com.davidmatillacode.common.db")
+        }
+    }
 }
 
 group = "com.davidmatillacode"
@@ -23,6 +31,7 @@ kotlin {
                 api(compose.material)
                 implementation ("com.arkivanov.decompose:decompose:1.0.0")
                 implementation("io.github.xxfast:decompose-router:0.3.0")
+                implementation("app.cash.sqldelight:sqlite-driver:2.0.0-rc01")
 
             }
         }
@@ -35,6 +44,8 @@ kotlin {
             dependencies {
                 api("androidx.appcompat:appcompat:1.4.1")
                 api("androidx.core:core-ktx:1.7.0")
+                implementation("app.cash.sqldelight:android-driver:2.0.0-rc01")
+
             }
         }
         val androidTest by getting {
@@ -45,6 +56,7 @@ kotlin {
         val desktopMain by getting {
             dependencies {
                 api(compose.preview)
+                implementation("app.cash.sqldelight:sqlite-driver:2.0.0-rc01")
             }
         }
         val desktopTest by getting

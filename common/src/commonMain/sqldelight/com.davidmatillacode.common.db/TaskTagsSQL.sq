@@ -1,0 +1,15 @@
+CREATE TABLE TaskTags (
+    id_tag INTEGER  NOT NULL,
+    id_task INTEGER NOT NULL,
+    FOREIGN KEY (id_task) REFERENCES Task(id_task),
+    FOREIGN KEY (id_tag)  REFERENCES Tag(id_tag)
+);
+
+SELECT * FROM TaskTags;
+SELECT id_tag FROM TaskTags WHERE  id_task = :task_id;
+
+insertTaskTags:
+INSERT OR REPLACE INTO TaskTags(id_tag,id_task) VALUES (?,?);
+
+deleteTaskTag:
+DELETE FROM TaskTags WHERE id_tag = :id_tag AND id_task = :id_task;

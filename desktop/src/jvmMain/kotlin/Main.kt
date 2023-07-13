@@ -6,6 +6,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.DefaultComponentContext
@@ -21,7 +22,7 @@ fun main() {
         val windowState = rememberWindowState()
 
         LifecycleController(lifecycle, windowState)
-
+        println("${windowState.size.height} / ${windowState.size.width}")
         Window(
             onCloseRequest = ::exitApplication,
             state = windowState,
@@ -30,7 +31,7 @@ fun main() {
             Surface(modifier = Modifier.fillMaxSize()) {
                 MaterialTheme {
                     CompositionLocalProvider(LocalComponentContext provides rootComponentContext) {
-                        MainContent()
+                        MainContent(windowState)
                     }
                 }
             }

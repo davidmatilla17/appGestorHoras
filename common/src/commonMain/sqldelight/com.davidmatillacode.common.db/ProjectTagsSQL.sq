@@ -1,0 +1,12 @@
+CREATE TABLE ProjectTags (
+    id_tag INTEGER  NOT NULL,
+    id_project TEXT NOT NULL,
+    FOREIGN KEY (id_project) REFERENCES Project(id_project),
+    FOREIGN KEY (id_tag) REFERENCES Tag(id_tag)
+);
+
+insertProjectTags:
+INSERT OR REPLACE INTO ProjectTags(id_tag,id_project) VALUES (?,?);
+
+deleteProjectTags:
+DELETE FROM ProjectTags WHERE id_project = :id_project AND id_tag = :id_tag;

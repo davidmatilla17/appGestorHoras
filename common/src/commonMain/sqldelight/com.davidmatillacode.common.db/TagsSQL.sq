@@ -1,0 +1,12 @@
+CREATE TABLE Tag (
+    id_tag INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    description TEXT NOT NULL
+);
+selectAll:
+SELECT * FROM  Tag;
+
+insertTag:
+INSERT OR REPLACE INTO Tag(description) VALUES (?);
+
+deleteTag:
+DELETE FROM Tag WHERE id_tag = :id;

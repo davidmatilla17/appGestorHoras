@@ -10,11 +10,11 @@ import io.github.xxfast.decompose.router.content.RoutedContent
 import io.github.xxfast.decompose.router.rememberRouter
 
 @Composable
-fun MainContent(){
+fun MainContent(width : Int, height : Int){
     val router: Router<Screens> = rememberRouter<Screens>(Screens::class,listOf(Screens.List))
     RoutedContent(
         router = router,
         animation = stackAnimation(slide()),
-    ) { screen -> getScreen(screen,router)
+    ) { screen -> getScreen(screen,router,width,height)
     }
 }
