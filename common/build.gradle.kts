@@ -32,6 +32,7 @@ kotlin {
                 implementation ("com.arkivanov.decompose:decompose:1.0.0")
                 implementation("io.github.xxfast:decompose-router:0.3.0")
                 implementation("app.cash.sqldelight:sqlite-driver:2.0.0-rc01")
+                implementation ("org.kodein.di:kodein-di:7.20.2")
 
             }
         }
@@ -42,10 +43,13 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                api(compose.runtime)
+                api(compose.foundation)
+                api(compose.material)
                 api("androidx.appcompat:appcompat:1.4.1")
                 api("androidx.core:core-ktx:1.7.0")
                 implementation("app.cash.sqldelight:android-driver:2.0.0-rc01")
-
+                implementation ("org.kodein.di:kodein-di:7.20.2")
             }
         }
         val androidTest by getting {
@@ -57,6 +61,8 @@ kotlin {
             dependencies {
                 api(compose.preview)
                 implementation("app.cash.sqldelight:sqlite-driver:2.0.0-rc01")
+                implementation ("org.kodein.di:kodein-di:7.20.2")
+                implementation ("com.github.sarxos:webcam-capture:0.3.12")
             }
         }
         val desktopTest by getting
@@ -70,6 +76,7 @@ android {
         minSdkVersion(24)
         targetSdkVersion(34)
     }
+    sourceSets["main"].res.srcDirs("src/commonMain/res")
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

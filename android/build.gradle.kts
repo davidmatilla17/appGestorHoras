@@ -19,7 +19,8 @@ dependencies {
     implementation ("com.arkivanov.decompose:extensions-compose-jetpack:1.0.0")
     implementation("io.github.xxfast:decompose-router:0.3.0")
     implementation ("com.arkivanov.decompose:extensions-compose-jetbrains:1.0.0")
-
+    implementation ("org.kodein.di:kodein-di:7.19.0")
+    implementation ("org.kodein.di:kodein-di-framework-android-x:7.20.2")
 }
 
 android {

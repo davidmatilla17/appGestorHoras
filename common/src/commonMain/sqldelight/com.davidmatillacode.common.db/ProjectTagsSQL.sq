@@ -1,6 +1,6 @@
 CREATE TABLE ProjectTags (
     id_tag INTEGER  NOT NULL,
-    id_project TEXT NOT NULL,
+    id_project INTEGER NOT NULL,
     FOREIGN KEY (id_project) REFERENCES Project(id_project),
     FOREIGN KEY (id_tag) REFERENCES Tag(id_tag)
 );

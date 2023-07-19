@@ -5,6 +5,8 @@ CREATE TABLE Project (
 
 selectAll:
 SELECT * FROM  Project;
+selectById:
+SELECT * FROM  Project WHERE id_project = :id_project LIMIT 1;
 selectProjectByFilters:
 SELECT Project.id_project , Project.description FROM Project
 JOIN ProjectTags ON ProjectTags.id_project = Project.id_project
