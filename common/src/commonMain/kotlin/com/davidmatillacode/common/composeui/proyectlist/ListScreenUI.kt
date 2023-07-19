@@ -19,7 +19,7 @@ fun ListScreen(router: Router<Screens>,width : Int, height : Int){
         Column(verticalArrangement = Arrangement.Center,modifier = Modifier.fillMaxSize()) {
             Text("esto es un texto Listado")
             TextButton(onClick = {
-                router.push(Screens.Details("${Random.nextInt()}"))
+                router.push(Screens.Details(Random.nextInt().toLong()))
             }){
                 Text("boton")
             } }
