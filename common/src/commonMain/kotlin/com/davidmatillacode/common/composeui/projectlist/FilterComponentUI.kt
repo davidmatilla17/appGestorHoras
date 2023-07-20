@@ -1,5 +1,6 @@
 package com.davidmatillacode.common.composeui.projectlist
 
+import CustomOutlinedTextField
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.Card
@@ -35,12 +37,18 @@ import com.davidmatillacode.common.composeui.utils.TextLargeBold
 import com.davidmatillacode.common.composeui.utils.TextMedium
 import com.davidmatillacode.common.composeui.utils.TextMediumBold
 import com.davidmatillacode.common.composeui.utils.TextSmallBold
+import com.davidmatillacode.common.composeui.utils.customCheckbox
+import com.davidmatillacode.common.composeui.utils.multiCheckBox
 import com.davidmatillacode.common.composeui.utils.paddingLarge
 import com.davidmatillacode.common.composeui.utils.paddingMedium
 import com.davidmatillacode.common.composeui.utils.paddingSmall
 
 @Composable
 fun FilterComponent() {
+    val textListPrueba = ArrayList<String>()
+    for(x in 1..20){
+        textListPrueba.add("texto tag ${x}")
+    }
     var textValue by remember { mutableStateOf("") }
     Card(Modifier.fillMaxWidth().padding(horizontal = paddingMedium), elevation = 0.dp) {
         LazyColumn {
@@ -50,22 +58,16 @@ fun FilterComponent() {
                 Spacer(Modifier.height(paddingSmall))
             }
             item {
-                OutlinedTextField(
+                CustomOutlinedTextField(
                     value = textValue,
-                    leadingIcon = {
-                        Icon(
-                            Icons.Default.Search,
-                            "search",
-                            modifier = Modifier.padding(0.dp)
-                        )
-                    },
                     onValueChange = { textValue = it },
                     readOnly = false,
                     singleLine = true,
+
                     placeholder = { TextMedium("Search") },
                     maxLines = 1,
                     shape = MaterialTheme.shapes.small.copy(CornerSize(100)),
-                    modifier = Modifier.padding(0.dp),
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 Spacer(Modifier.height(paddingSmall))
             }
@@ -84,6 +86,11 @@ fun FilterComponent() {
                         TextSmallBold("Añadir")
                     }
                 }
+            }
+            item{
+                multiCheckBox(textListPrueba)
+            }
+            item{
                 Spacer(Modifier.height(paddingLarge))
             }
         }

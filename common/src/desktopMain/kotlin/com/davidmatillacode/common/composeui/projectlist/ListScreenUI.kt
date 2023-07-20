@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,54 +22,64 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.davidmatillacode.common.composeui.utils.TextMedium
 import com.davidmatillacode.common.composeui.utils.paddingLarge
 import com.davidmatillacode.common.navigator.Screens
 import io.github.xxfast.decompose.router.Router
 
 @Composable
 actual fun ListScreen(router: Router<Screens>, width: Int, height: Int) {
-    Scaffold {
-      if (width < 650)
-          screenWithLateralMenu()
+    var menuOpen by remember { mutableStateOf(false) }
+    Scaffold(topBar = {
+        if (width < 650)
+            TopAppBar(title = {},
+                navigationIcon = {
+                    IconButton(onClick = { menuOpen = !menuOpen }) {
+                        Icon(Icons.Default.Menu, "home")
+                    }
+                }
+            )
+    }, floatingActionButton = {
+        FloatingActionButton(onClick = {}){
+            Icon(Icons.Default.Add, "add")
+        }
+    }) {
+        if (width < 650)
+            screenWithLateralMenu(menuOpen) {
+                menuOpen = false
+            }
         else
             screenLandscape(width)
     }
 }
 
 @Composable
-private fun screenLandscape(width: Int){
+private fun screenLandscape(width: Int) {
     Row(Modifier.fillMaxWidth().fillMaxHeight()) {
         Box(
             modifier = Modifier.weight(0.3f)
-        ){
+        ) {
             FilterComponent()
         }
         Column(
             modifier = Modifier.weight(0.7f)
-        ){
+        ) {
             Spacer(Modifier.height(paddingLarge))
             ProjectListComponent()
         }
-        if(width > 1200)
+        if (width > 1200)
             Box(modifier = Modifier.weight(0.3f))
     }
 }
 
 @Composable
-private fun screenWithLateralMenu(){
-    var menuOpen by remember { mutableStateOf(false) }
+private fun screenWithLateralMenu(menuOpen: Boolean, onOutClick: () -> Unit) {
     Box(Modifier.fillMaxSize()) {
         Column {
-            IconButton(onClick = {
-                menuOpen = true
-            }){
-                Icon(Icons.Default.Menu,"home")
-            }
+            Spacer(Modifier.height(paddingLarge))
             ProjectListComponent()
         }
-            if(menuOpen)
-                menuLateralFilters{
-                    menuOpen = false
-                }
+        if (menuOpen)
+            menuLateralFilters(onOutClick)
     }
 }
