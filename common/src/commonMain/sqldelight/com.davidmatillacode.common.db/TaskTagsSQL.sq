@@ -5,7 +5,9 @@ CREATE TABLE TaskTags (
     FOREIGN KEY (id_tag)  REFERENCES Tag(id_tag)
 );
 
+selectAll:
 SELECT * FROM TaskTags;
+selectByTaskId:
 SELECT id_tag FROM TaskTags WHERE  id_task = :task_id;
 
 insertTaskTags:

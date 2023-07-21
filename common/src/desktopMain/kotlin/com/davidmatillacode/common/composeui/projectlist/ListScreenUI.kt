@@ -24,12 +24,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.davidmatillacode.common.composeui.utils.TextMedium
 import com.davidmatillacode.common.composeui.utils.paddingLarge
+import com.davidmatillacode.common.di.getAppDI
 import com.davidmatillacode.common.navigator.Screens
+import com.davidmatillacode.common.viewmodel.DialogsViewModel
 import io.github.xxfast.decompose.router.Router
+import org.kodein.di.instance
 
 @Composable
 actual fun ListScreen(router: Router<Screens>, width: Int, height: Int) {
     var menuOpen by remember { mutableStateOf(false) }
+    val dialogsViewModel by getAppDI().instance<DialogsViewModel>()
+
+    val isTaskDialogOpen = dialogsViewModel.stateAddTaskDialogVisible.value
+    val isTagDialogOpen = dialogsViewModel.stateAddTagDialogVisible.value
+    val isProjectDialogOpen = dialogsViewModel.stateAddProjectDialogVisible.value
+
     Scaffold(topBar = {
         if (width < 650)
             TopAppBar(title = {},
@@ -40,7 +49,9 @@ actual fun ListScreen(router: Router<Screens>, width: Int, height: Int) {
                 }
             )
     }, floatingActionButton = {
-        FloatingActionButton(onClick = {}){
+        FloatingActionButton(onClick = {
+            dialogsViewModel.setVisilityAddProjectDialog(true)
+        }){
             Icon(Icons.Default.Add, "add")
         }
     }) {
@@ -50,6 +61,17 @@ actual fun ListScreen(router: Router<Screens>, width: Int, height: Int) {
             }
         else
             screenLandscape(width)
+    }
+
+    if(isTagDialogOpen){
+        AddTagDialog()
+    }
+
+    if(isTaskDialogOpen){
+        AddTaskDialog()
+    }
+    if(isProjectDialogOpen){
+        AddProjectDialog()
     }
 }
 

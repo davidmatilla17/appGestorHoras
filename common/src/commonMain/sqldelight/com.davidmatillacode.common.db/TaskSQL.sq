@@ -9,14 +9,19 @@ CREATE TABLE Task (
 selectAll:
 SELECT * FROM  Task;
 selectTaskByFilters:
-SELECT Project.id_project , Project.description , Task.id_task, Task.description FROM Project
-    JOIN Task ON Task.id_project = Project.id_project
+SELECT Task.* FROM Task
+    JOIN Project ON  Project.id_project = Task.id_project
+WHERE (Project.id_project = :id_project AND Task.description LIKE ('%' || :description  || '%') );
+
+selectTaskByFiltersWithTags:
+SELECT Task.* FROM Task
+    JOIN Project ON Project.id_project = Task.id_project
     JOIN ProjectTags ON ProjectTags.id_project = Project.id_project
     JOIN TaskTags ON TaskTags.id_task = Task.id_task
     JOIN Tag ON ProjectTags.id_tag = Tag.id_tag
-WHERE (ProjectTags.id_tag IN (:TagList) OR TaskTags.id_tag IN (:TagList))
-    AND (Project.description LIKE "%"+ :description +"%" OR Task.description LIKE "%"+ :description +"%" )
-GROUP BY Project.id_project;
+WHERE (ProjectTags.id_tag = :id_tag OR TaskTags.id_tag = :id_tag)
+    AND Project.id_project = :id_project AND Task.description LIKE ('%' || :description  || '%')
+GROUP BY Task.id_task;
 
 insertTask:
 INSERT OR REPLACE INTO Task(id_project,description,stimated_time) VALUES (?,?,?);

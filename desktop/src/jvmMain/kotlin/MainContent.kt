@@ -2,6 +2,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.WindowState
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
+import com.davidmatillacode.common.composeui.CameraScreen
 import com.davidmatillacode.common.navigator.Screens
 import com.davidmatillacode.common.navigator.getScreen
 import io.github.xxfast.decompose.router.Router

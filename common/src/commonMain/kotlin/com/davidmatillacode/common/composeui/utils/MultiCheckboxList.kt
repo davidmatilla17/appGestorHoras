@@ -14,18 +14,29 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+const val NOT_SELECTED = -1
+const val NOT_SELECTED_LONG = -1L
 
 @Composable
-fun multiCheckBox(text : List<String>) {
-    val checkDataRaw: List<Boolean> = text.map { false }.toList()
-    var checkValueStatus = remember { mutableStateOf(checkDataRaw) }
+fun multiCheckBox(text: List <String>,selectedPos : Int?,onSelect :(Int)->Unit) {
+    val newcheckDataRaw: MutableList<Boolean> = text.map { false }.toList().toMutableList()
+    if((selectedPos ?: -1) >= 0) {
+        selectedPos?.let {
+            newcheckDataRaw[it] = true
+        }
+    }
+    var checkValueStatus = remember { mutableStateOf(newcheckDataRaw) }
     Column {
         text.forEachIndexed { i, t ->
             customCheckbox({ TextMedium(t) }, checkValueStatus.value[i]) {
                 val checkDataRaw: MutableList<Boolean> = text.map { false }.toList() as MutableList<Boolean>
                 checkDataRaw[i] = it
                 checkValueStatus.value = checkDataRaw
+                if(it) {
+                    onSelect(i)
+                } else{
+                    onSelect(NOT_SELECTED)
+                }
             }
 
         }

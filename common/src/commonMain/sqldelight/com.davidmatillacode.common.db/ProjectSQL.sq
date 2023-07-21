@@ -7,11 +7,20 @@ selectAll:
 SELECT * FROM  Project;
 selectById:
 SELECT * FROM  Project WHERE id_project = :id_project LIMIT 1;
-selectProjectByFilters:
-SELECT Project.id_project , Project.description FROM Project
+selectProjectByFiltersWithTags:
+SELECT Project.* FROM Project
+JOIN Task ON Project.id_project = Task.id_project
+JOIN TaskTags ON TaskTags.id_task = Task.id_task
 JOIN ProjectTags ON ProjectTags.id_project = Project.id_project
 JOIN Tag ON ProjectTags.id_tag = Tag.id_tag
-WHERE ProjectTags.id_tag IN (:LIST) AND Project.description LIKE "%"+ :description +"%"
+WHERE (ProjectTags.id_tag = :id_tag OR TaskTags.id_tag = :id_tag) AND
+(Project.description LIKE ('%' || :description  || '%') OR Task.description LIKE ('%' || :description  || '%'))
+GROUP BY Project.id_project;
+
+selectProjectByFilters:
+SELECT Project.* FROM Project
+JOIN Task ON Project.id_project = Task.id_project
+WHERE Project.description LIKE ('%' | :description  || '%') OR Task.description LIKE ('%' || :description  || '%')
 GROUP BY Project.id_project;
 
 insertProject:

@@ -5,6 +5,16 @@ CREATE TABLE Tag (
 selectAll:
 SELECT * FROM  Tag;
 
+selectTaskTags:
+SELECT DISTINCT Tag.* FROM Tag
+JOIN TaskTags ON Tag.id_tag = TaskTags.id_tag
+WHERE TaskTags.id_task = :id_task;
+
+selectProjectTags:
+SELECT DISTINCT Tag.* FROM Tag
+JOIN ProjectTags ON Tag.id_tag = ProjectTags.id_tag
+WHERE ProjectTags.id_project = :id_project;
+
 insertTag:
 INSERT OR REPLACE INTO Tag(description) VALUES (?);
 

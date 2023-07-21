@@ -32,45 +32,39 @@ import com.davidmatillacode.common.composeui.utils.paddingLarge
 import com.davidmatillacode.common.composeui.utils.paddingMedium
 import com.davidmatillacode.common.composeui.utils.paddingMinimun
 import com.davidmatillacode.common.composeui.utils.paddingSmall
+import com.davidmatillacode.common.di.getAppDI
+import com.davidmatillacode.common.model.ListUnit
+import com.davidmatillacode.common.viewmodel.DialogsViewModel
+import com.davidmatillacode.common.viewmodel.ProjectListViewModel
+import org.kodein.di.instance
 
 @Composable
 fun ProjectListComponent() {
-    val defaultList = ArrayList<String>()
+    val listViewModel by getAppDI().instance<ProjectListViewModel>()
+    val projectList = listViewModel.stateProjectsList
+    /*val defaultList = ArrayList<String>()
     for (x in 0..3) {
         defaultList.add(x.toString())
-    }
+    }*/
     Column {
         LazyColumn(Modifier.padding(horizontal = paddingMedium).fillMaxSize()) {
             item {
                 TextLargeBold("Proyectos")
                 Spacer(Modifier.height(paddingLarge))
             }
-            defaultList.map {
+            projectList.value.map {
                 item {
-                    projectDetail()
+                    projectDetail(it)
                 }
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun projectDetail() {
-    val defaultList = ArrayList<String>()
-    for (x in 0..3) {
-        defaultList.add(x.toString())
-    }
-    var openDialog by remember { mutableStateOf(false) }
+private fun projectDetail(project : ListUnit.ProjectUnit) {
+    val dialogsViewModel by getAppDI().instance<DialogsViewModel>()
     Box{
-        if(openDialog)
-        AlertDialog(onDismissRequest = {
-            openDialog = false
-        }, title = {
-            Text(text = "Title")
-        }, text = {
-            Text("dialogo")
-        }, buttons = {})
         Column {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -79,22 +73,22 @@ private fun projectDetail() {
                     .padding(horizontal = paddingSmall, vertical = paddingMinimun),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                TextMedium("Nombre Projecto 1")
+                TextMedium(project.description)
                 IconButton(onClick = {
-                    openDialog = true
+                    dialogsViewModel.setVisilityAddTaskDialog(true)
                 }) {
                     Icon(Icons.Default.Add, "add")
                 }
             }
-            defaultList.map {
-                taskDetail()
+            project.tasks.map {
+                taskDetail(it)
             }
         }
     }
 }
 
 @Composable
-private fun taskDetail() {
+private fun taskDetail(task : ListUnit.TaskUnit) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
@@ -102,7 +96,7 @@ private fun taskDetail() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         TextMedium(
-            "Detalle de tareaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            task.description,
             modifier = Modifier.fillMaxWidth(0.7f)
         )
         IconButton(onClick = {}) {

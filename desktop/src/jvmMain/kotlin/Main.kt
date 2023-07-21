@@ -17,26 +17,28 @@ import com.davidmatillacode.common.composeui.utils.primaryColor
 import com.davidmatillacode.common.composeui.utils.secondaryColor
 import com.davidmatillacode.common.db.Database
 import com.davidmatillacode.common.di.BaseDI
+import com.davidmatillacode.common.di.RepositoryModule
 import com.davidmatillacode.common.di.getAppDI
 import com.davidmatillacode.common.di.viewModelModule
 import di.dbModule
 import io.github.xxfast.decompose.LocalComponentContext
 import org.kodein.di.DI
 import org.kodein.di.instance
+import utils.runOnUiThread
+import kotlin.random.Random
 
 val di = DI {
     import(viewModelModule)
+    import(RepositoryModule)
     importAll(dbModule)
 }
 
 private
 fun main() {
     BaseDI.di = di
-    val db: Database by getAppDI().instance()
+    getBaseDBInfo()
     val lifecycle = LifecycleRegistry()
-    val rootComponentContext = DefaultComponentContext(lifecycle = lifecycle)
-    for(x in 1..10)
-        db.projectSQLQueries.insertProject("prueba")
+    val rootComponentContext = runOnUiThread {  DefaultComponentContext(lifecycle = lifecycle) }
     application {
         val windowState = rememberWindowState(size = DpSize(1320.dp,720.dp))
         LifecycleController(lifecycle, windowState)
@@ -54,6 +56,28 @@ fun main() {
                         MainContent(windowState)
                     }
                 }
+            }
+        }
+    }
+}
+
+fun getBaseDBInfo(){
+    val db: Database by getAppDI().instance()
+    for(x in 1..10){
+        db.tagsSQLQueries.insertTag("Tag $x")
+    }
+    for(x in 1..10) {
+        db.projectSQLQueries.insertProject("prueba project $x")
+        for(y in 1..3) {
+            db.projectTagsSQLQueries.insertProjectTags((Random.nextLong() % 20), x.toLong())
+        }
+        for(y in 1..10){
+            db.taskSQLQueries.insertTask(x.toLong(), "project $x task $y",10)
+        }
+        val tasks = db.taskSQLQueries.selectTaskByFilters(x.toLong(),"").executeAsList()
+        for(task in tasks) {
+            for (z in 1..3) {
+                db.taskTagsSQLQueries.insertTaskTags(Random.nextLong(1,20), task.id_task)
             }
         }
     }
