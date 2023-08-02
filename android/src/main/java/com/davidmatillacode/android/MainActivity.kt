@@ -52,7 +52,7 @@ class MainActivity: AppCompatActivity() {
         for(x in 1..10) {
             db.projectSQLQueries.insertProject("prueba project $x")
             for(y in 1..3) {
-                db.projectTagsSQLQueries.insertProjectTags((Random.nextLong() % 20), x.toLong())
+                db.projectTagsSQLQueries.insertProjectTags((Random.nextLong(1,10)), x.toLong())
             }
             for(y in 1..10){
                 db.taskSQLQueries.insertTask(x.toLong(), "project $x task $y",10)
@@ -60,7 +60,7 @@ class MainActivity: AppCompatActivity() {
             val tasks = db.taskSQLQueries.selectTaskByFilters(x.toLong(),"").executeAsList()
             for(task in tasks) {
                 for (z in 1..3) {
-                    db.taskTagsSQLQueries.insertTaskTags(Random.nextLong(1,20), task.id_task)
+                    db.taskTagsSQLQueries.insertTaskTags(Random.nextLong(1,10), task.id_task)
                 }
             }
         }

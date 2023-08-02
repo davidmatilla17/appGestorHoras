@@ -19,8 +19,8 @@ GROUP BY Project.id_project;
 
 selectProjectByFilters:
 SELECT Project.* FROM Project
-JOIN Task ON Project.id_project = Task.id_project
-WHERE Project.description LIKE ('%' | :description  || '%') OR Task.description LIKE ('%' || :description  || '%')
+LEFT JOIN Task ON Project.id_project = Task.id_project
+WHERE Project.description LIKE '%' || :description  || '%' OR Task.description LIKE '%' || :description  || '%'
 GROUP BY Project.id_project;
 
 insertProject:

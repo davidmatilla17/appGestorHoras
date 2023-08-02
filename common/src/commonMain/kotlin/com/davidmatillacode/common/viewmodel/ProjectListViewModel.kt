@@ -1,6 +1,7 @@
 package com.davidmatillacode.common.viewmodel
 
 import ViewModel
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.davidmatillacode.common.composeui.utils.NOT_SELECTED
@@ -8,11 +9,11 @@ import com.davidmatillacode.common.composeui.utils.NOT_SELECTED_LONG
 import com.davidmatillacode.common.di.getAppDI
 import com.davidmatillacode.common.model.ListUnit
 import com.davidmatillacode.common.repository.ProjectRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.instance
 
-class ProjectListViewModel : ViewModel() {
-    val repository by getAppDI().instance<ProjectRepository>()
+class ProjectListViewModel(private val repository : ProjectRepository) : ViewModel() {
 
     val _stateSearchFilter = mutableStateOf("")
     val stateSearchFilter: State<String> = _stateSearchFilter
@@ -32,18 +33,18 @@ class ProjectListViewModel : ViewModel() {
     }
 
     fun updateSearchFilter(value : String){
-        launch{
-            _stateSearchFilter.value = value
-            val tag = if(stateTagFilter.value != NOT_SELECTED_LONG ) stateTagFilter.value  else null
-            val result = repository.getProjectWithFilters(value.trim(),tag)
-            _stateProjectsList.value = result
-        }
+        _stateSearchFilter.value = value
+        updateAllData()
     }
 
     fun updateTagFilter(tagId : Long){
         _stateTagFilter.value = tagId
+        updateAllData()
+    }
+
+    fun updateAllData(){
         launch{
-            val searchText = _stateSearchFilter.value.trim()
+            val searchText = stateSearchFilter.value.trim()
             val tag = if(stateTagFilter.value != NOT_SELECTED_LONG ) stateTagFilter.value  else null
             val result = repository.getProjectWithFilters(searchText,tag)
             _stateProjectsList.value = result

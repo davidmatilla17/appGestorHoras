@@ -1,6 +1,5 @@
 package com.davidmatillacode.common.composeui.utils
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -25,11 +24,11 @@ fun multiCheckBox(text: List <String>,selectedPos : Int?,onSelect :(Int)->Unit) 
             newcheckDataRaw[it] = true
         }
     }
-    var checkValueStatus = remember { mutableStateOf(newcheckDataRaw) }
+    val checkValueStatus =  mutableStateOf(newcheckDataRaw)
     Column {
         text.forEachIndexed { i, t ->
             customCheckbox({ TextMedium(t) }, checkValueStatus.value[i]) {
-                val checkDataRaw: MutableList<Boolean> = text.map { false }.toList() as MutableList<Boolean>
+                val checkDataRaw: MutableList<Boolean> = text.map { false }.toMutableList()
                 checkDataRaw[i] = it
                 checkValueStatus.value = checkDataRaw
                 if(it) {

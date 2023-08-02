@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.davidmatillacode.common.composeui.CameraScreen
 import com.davidmatillacode.common.composeui.utils.TextMedium
 import com.davidmatillacode.common.composeui.utils.paddingLarge
 import com.davidmatillacode.common.di.getAppDI
@@ -33,45 +34,49 @@ import org.kodein.di.instance
 @Composable
 actual fun ListScreen(router: Router<Screens>, width: Int, height: Int) {
     var menuOpen by remember { mutableStateOf(false) }
-    val dialogsViewModel by getAppDI().instance<DialogsViewModel>()
+    if(false){
+        CameraScreen(1,router,width,height)
+    }else {
+        val dialogsViewModel by getAppDI().instance<DialogsViewModel>()
 
-    val isTaskDialogOpen = dialogsViewModel.stateAddTaskDialogVisible.value
-    val isTagDialogOpen = dialogsViewModel.stateAddTagDialogVisible.value
-    val isProjectDialogOpen = dialogsViewModel.stateAddProjectDialogVisible.value
+        val isTaskDialogOpen = dialogsViewModel.stateAddTaskDialogVisible.value
+        val isTagDialogOpen = dialogsViewModel.stateAddTagDialogVisible.value
+        val isProjectDialogOpen = dialogsViewModel.stateAddProjectDialogVisible.value
 
-    Scaffold(topBar = {
-        if (width < 650)
-            TopAppBar(title = {},
-                navigationIcon = {
-                    IconButton(onClick = { menuOpen = !menuOpen }) {
-                        Icon(Icons.Default.Menu, "home")
+        Scaffold(topBar = {
+            if (width < 650)
+                TopAppBar(title = {},
+                    navigationIcon = {
+                        IconButton(onClick = { menuOpen = !menuOpen }) {
+                            Icon(Icons.Default.Menu, "home")
+                        }
                     }
-                }
-            )
-    }, floatingActionButton = {
-        FloatingActionButton(onClick = {
-            dialogsViewModel.setVisilityAddProjectDialog(true)
-        }){
-            Icon(Icons.Default.Add, "add")
-        }
-    }) {
-        if (width < 650)
-            screenWithLateralMenu(menuOpen) {
-                menuOpen = false
+                )
+        }, floatingActionButton = {
+            FloatingActionButton(onClick = {
+                dialogsViewModel.setVisilityAddProjectDialog(true)
+            }) {
+                Icon(Icons.Default.Add, "add")
             }
-        else
-            screenLandscape(width)
-    }
+        }) {
+            if (width < 650)
+                screenWithLateralMenu(menuOpen) {
+                    menuOpen = false
+                }
+            else
+                screenLandscape(width)
+        }
 
-    if(isTagDialogOpen){
-        AddTagDialog()
-    }
+        if (isTagDialogOpen) {
+            AddTagDialog()
+        }
 
-    if(isTaskDialogOpen){
-        AddTaskDialog()
-    }
-    if(isProjectDialogOpen){
-        AddProjectDialog()
+        if (isTaskDialogOpen) {
+            AddTaskDialog()
+        }
+        if (isProjectDialogOpen) {
+            AddProjectDialog()
+        }
     }
 }
 

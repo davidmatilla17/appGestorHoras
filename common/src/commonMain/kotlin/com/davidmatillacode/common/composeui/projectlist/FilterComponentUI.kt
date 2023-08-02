@@ -51,7 +51,7 @@ fun FilterComponent() {
     val dialogsViewModel by getAppDI().instance<DialogsViewModel>()
     val searchFilterValue = listViewModel.stateSearchFilter
     val stateTagList = listViewModel.stateTagsList.value
-    val selectedTagId = listViewModel._stateTagFilter.value
+    val selectedTagId = listViewModel.stateTagFilter.value
 
     var textValue by remember { mutableStateOf("") }
     Card(Modifier.fillMaxWidth().padding(horizontal = paddingMedium), elevation = 0.dp) {

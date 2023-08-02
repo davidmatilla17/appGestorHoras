@@ -7,7 +7,10 @@ import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
 
-fun bufferedToBitmap(img : BufferedImage?) : ImageBitmap {
+fun bufferedToBitmap(img : BufferedImage?) : ImageBitmap? {
+    if(img == null){
+        return null
+    }
     val stream = ByteArrayOutputStream()
     ImageIO.write(img, "png", stream)
     val byteArray = stream.toByteArray()

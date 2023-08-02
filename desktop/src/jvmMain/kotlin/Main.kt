@@ -69,7 +69,7 @@ fun getBaseDBInfo(){
     for(x in 1..10) {
         db.projectSQLQueries.insertProject("prueba project $x")
         for(y in 1..3) {
-            db.projectTagsSQLQueries.insertProjectTags((Random.nextLong() % 20), x.toLong())
+            db.projectTagsSQLQueries.insertProjectTags(Random.nextLong(1,11), x.toLong())
         }
         for(y in 1..10){
             db.taskSQLQueries.insertTask(x.toLong(), "project $x task $y",10)
@@ -77,7 +77,7 @@ fun getBaseDBInfo(){
         val tasks = db.taskSQLQueries.selectTaskByFilters(x.toLong(),"").executeAsList()
         for(task in tasks) {
             for (z in 1..3) {
-                db.taskTagsSQLQueries.insertTaskTags(Random.nextLong(1,20), task.id_task)
+                db.taskTagsSQLQueries.insertTaskTags(Random.nextLong(1,11), task.id_task)
             }
         }
     }

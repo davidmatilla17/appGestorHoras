@@ -11,18 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.davidmatillacode.common.composeui.utils.TextLargeBold
@@ -42,29 +35,25 @@ import org.kodein.di.instance
 fun ProjectListComponent() {
     val listViewModel by getAppDI().instance<ProjectListViewModel>()
     val projectList = listViewModel.stateProjectsList
-    /*val defaultList = ArrayList<String>()
-    for (x in 0..3) {
-        defaultList.add(x.toString())
-    }*/
-    Column {
-        LazyColumn(Modifier.padding(horizontal = paddingMedium).fillMaxSize()) {
-            item {
-                TextLargeBold("Proyectos")
-                Spacer(Modifier.height(paddingLarge))
+    LazyColumn(Modifier.padding(horizontal = paddingMedium).fillMaxSize()) {
+        item(key = "column text") {
+            TextLargeBold("Proyectos")
+            Spacer(Modifier.height(paddingLarge))
+        }
+        items(count = projectList.value.size,
+            key = {
+                "${projectList.value[it].id_project}"
             }
-            projectList.value.map {
-                item {
-                    projectDetail(it)
-                }
-            }
+        ) {
+            projectDetail(projectList.value[it])
         }
     }
 }
 
 @Composable
-private fun projectDetail(project : ListUnit.ProjectUnit) {
+private fun projectDetail(project: ListUnit.ProjectUnit) {
     val dialogsViewModel by getAppDI().instance<DialogsViewModel>()
-    Box{
+    Box {
         Column {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -75,7 +64,7 @@ private fun projectDetail(project : ListUnit.ProjectUnit) {
             ) {
                 TextMedium(project.description)
                 IconButton(onClick = {
-                    dialogsViewModel.setVisilityAddTaskDialog(true)
+                    dialogsViewModel.setVisilityAddTaskDialog(project.id_project,true)
                 }) {
                     Icon(Icons.Default.Add, "add")
                 }
@@ -88,7 +77,7 @@ private fun projectDetail(project : ListUnit.ProjectUnit) {
 }
 
 @Composable
-private fun taskDetail(task : ListUnit.TaskUnit) {
+private fun taskDetail(task: ListUnit.TaskUnit) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()

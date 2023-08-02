@@ -33,7 +33,7 @@ kotlin {
                 implementation("io.github.xxfast:decompose-router:0.3.0")
                 implementation("app.cash.sqldelight:sqlite-driver:2.0.0-rc01")
                 implementation ("org.kodein.di:kodein-di:7.20.2")
-
+                implementation ("com.github.sarxos:webcam-capture:0.3.12")
             }
         }
         val commonTest by getting {

@@ -35,17 +35,17 @@ actual fun ListScreen(router: Router<Screens>, width: Int, height: Int) {
     val isProjectDialogOpen = dialogsViewModel.stateAddProjectDialogVisible.value
 
     Scaffold(topBar = {
-            TopAppBar(title = {},
-                navigationIcon = {
-                    IconButton(onClick = { menuOpen = !menuOpen }) {
-                        Icon(Icons.Default.Menu, "home")
-                    }
+        TopAppBar(title = {},
+            navigationIcon = {
+                IconButton(onClick = { menuOpen = !menuOpen }) {
+                    Icon(Icons.Default.Menu, "home")
                 }
-            )
+            }
+        )
     }, floatingActionButton = {
         FloatingActionButton(onClick = {
             dialogsViewModel.setVisilityAddProjectDialog(true)
-        }){
+        }) {
             Icon(Icons.Default.Add, "add")
         }
     }) {
@@ -61,14 +61,14 @@ actual fun ListScreen(router: Router<Screens>, width: Int, height: Int) {
                     menuOpen = false
                 }
         }
-        if(isTagDialogOpen){
+        if (isTagDialogOpen) {
             AddTagDialog()
         }
 
-        if(isTaskDialogOpen){
+        if (isTaskDialogOpen) {
             AddTaskDialog()
         }
-        if(isProjectDialogOpen){
+        if (isProjectDialogOpen) {
             AddProjectDialog()
         }
     }
