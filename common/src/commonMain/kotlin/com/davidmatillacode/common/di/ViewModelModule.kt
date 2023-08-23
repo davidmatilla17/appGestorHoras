@@ -13,5 +13,4 @@ val viewModelModule = DI.Module("ViewModelModule") {
     bind<ProjectListViewModel>() with singleton { ProjectListViewModel(instance()) }
     bind<DialogsViewModel>() with singleton { DialogsViewModel(instance(), instance(),instance(), instance()) }
     bind<CameraViewModel>() with singleton { CameraViewModel() }
-
 }

@@ -35,6 +35,8 @@ class TaskRepository(private val db: Database) {
             //GET TASK TAGS FROM DB
             val tags = db.tagsSQLQueries.selectTaskTags(task.id_task).executeAsList().map { t ->
                 ListUnit.TagUnit(t.id_tag, t.description)
+            }.sortedBy {
+                it.id_tag
             }
             task.tags.addAll(tags)
         }

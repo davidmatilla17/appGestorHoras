@@ -9,13 +9,18 @@ import androidx.compose.ui.unit.TextUnitType
 
 //NORMAL TEXT
 @Composable
-fun TextSmall(value: String,color : Color = textColor,modifier: Modifier = Modifier){
-    Text(value,color = color, fontSize = TextUnit(textSizeSmall, TextUnitType.Sp), fontFamily = defaultFont, modifier = modifier)
+fun TextSmall(value: String,color : Color = textColor,maxLines : Int = 1,modifier: Modifier = Modifier){
+    Text(value,color = color, fontSize = TextUnit(textSizeSmall, TextUnitType.Sp), fontFamily = defaultFont, modifier = modifier,maxLines = 1)
 }
 
 @Composable
 fun TextMedium(value: String,color : Color = textColor,modifier: Modifier = Modifier){
     Text(value,color = color, fontSize = TextUnit(textSizeMedium, TextUnitType.Sp), fontFamily = defaultFont, modifier = modifier)
+}
+
+@Composable
+fun TextMediumLarge(value: String,color : Color = textColor,modifier: Modifier = Modifier){
+    Text(value,color = color, fontSize = TextUnit(textSizeMediumLarge, TextUnitType.Sp), fontFamily = defaultFont, modifier = modifier)
 }
 
 @Composable
@@ -36,6 +41,11 @@ fun TextMediumBold(value: String,color : Color = textColor,modifier: Modifier = 
 }
 
 @Composable
+fun TextMediumLargeBold(value: String,color : Color = textColor,modifier: Modifier = Modifier){
+    Text(value,color = color, fontSize = TextUnit(textSizeMediumLarge, TextUnitType.Sp), fontFamily = defaultFontBold, modifier = modifier)
+}
+
+@Composable
 fun TextLargeBold(value: String,color : Color = textColor,modifier: Modifier = Modifier){
     Text(value,color = color, fontSize = TextUnit(textSizeLarge, TextUnitType.Sp), fontFamily = defaultFontBold, modifier = modifier)
 }
@@ -50,6 +60,10 @@ fun TextSmallItalic(value: String,color : Color = textColor,modifier: Modifier =
 @Composable
 fun TextMediumItalic(value: String,color : Color = textColor,modifier: Modifier = Modifier){
     Text(value,color = color, fontSize = TextUnit(textSizeMedium, TextUnitType.Sp), fontFamily = defaultFontItalic, modifier = modifier)
+}
+@Composable
+fun TextMediumLargeItalic(value: String,color : Color = textColor,modifier: Modifier = Modifier){
+    Text(value,color = color, fontSize = TextUnit(textSizeMediumLarge, TextUnitType.Sp), fontFamily = defaultFontItalic, modifier = modifier)
 }
 
 @Composable
@@ -67,6 +81,11 @@ fun TextSmallBoldItalic(value: String,color : Color = textColor,modifier: Modifi
 @Composable
 fun TextMediumBoldItalic(value: String,color : Color = textColor,modifier: Modifier = Modifier){
     Text(value,color = color, fontSize = TextUnit(textSizeMedium, TextUnitType.Sp), fontFamily = defaultFontBoldItalic, modifier = modifier)
+}
+
+@Composable
+fun TextMediumLargeBoldItalic(value: String,color : Color = textColor,modifier: Modifier = Modifier){
+    Text(value,color = color, fontSize = TextUnit(textSizeMediumLarge, TextUnitType.Sp), fontFamily = defaultFontBoldItalic, modifier = modifier)
 }
 
 @Composable

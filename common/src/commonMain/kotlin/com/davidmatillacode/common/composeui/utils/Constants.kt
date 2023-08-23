@@ -17,6 +17,7 @@ val backgroundLight = Color(232, 232, 232)
 
 //TEXT SIZE
 val textSizeLarge = 24f
+val textSizeMediumLarge = 18f
 val textSizeMedium = 14f
 val textSizeSmall = 12f
 

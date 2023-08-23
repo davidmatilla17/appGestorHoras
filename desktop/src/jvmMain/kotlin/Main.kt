@@ -67,7 +67,7 @@ fun getBaseDBInfo(){
         db.tagsSQLQueries.insertTag("Tag $x")
     }
     for(x in 1..10) {
-        db.projectSQLQueries.insertProject("prueba project $x")
+        db.projectSQLQueries.insertProject("prueba project $x".uppercase())
         for(y in 1..3) {
             db.projectTagsSQLQueries.insertProjectTags(Random.nextLong(1,11), x.toLong())
         }
