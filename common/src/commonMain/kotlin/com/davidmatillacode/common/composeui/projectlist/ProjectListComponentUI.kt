@@ -64,25 +64,59 @@ fun ProjectListComponent() {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun projectDetail(project: ListUnit.ProjectUnit) {
     val dialogsViewModel by getAppDI().instance<DialogsViewModel>()
+    val projectListViewModel by getAppDI().instance<ProjectListViewModel>()
     Box {
         Column {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
                     .background(backgroundLight)
-                    .padding(horizontal = paddingSmall, vertical = paddingMinimun),
+                    .padding(start = paddingSmall, end = paddingSmall, top = paddingMinimun),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                TextMedium(project.description)
+                TextMediumLarge(project.description)
                 IconButton(onClick = {
                     dialogsViewModel.setVisilityAddTaskDialog(project.id_project, true)
                 }) {
                     Icon(Icons.Default.Add, "add")
                 }
             }
+            if (project.tags.isNotEmpty())
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(100.dp),
+                    modifier = Modifier.heightIn(50.dp, 150.dp).background(backgroundLight)
+                ) {
+                    items(project.tags.size) {
+                        Box(modifier = Modifier.padding(start = paddingSmall)) {
+                            Chip(
+                                onClick = {
+                                    projectListViewModel.updateTagFilter(project.tags[it].id_tag)
+                                },
+                                border = ChipDefaults.outlinedBorder,
+                                colors = ChipDefaults.chipColors(
+                                    backgroundColor = Color.White
+                                )
+                            ) {
+                                Row(
+                                    Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    TextSmall(project.tags[it].description, maxLines = Int.MAX_VALUE)
+                                    Icon(
+                                        Icons.Rounded.Close,
+                                        "",
+                                        modifier = Modifier.clickable { println("cliiiiick") })
+                                }
+                            }
+
+                        }
+                    }
+                }
             project.tasks.map {
                 taskDetail(it)
             }
@@ -101,7 +135,7 @@ private fun taskDetail(task: ListUnit.TaskUnit) {
                 .padding(horizontal = paddingSmall, vertical = paddingMinimun),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            TextMediumLarge(
+            TextMedium(
                 task.description,
                 modifier = Modifier
             )
@@ -113,12 +147,10 @@ private fun taskDetail(task: ListUnit.TaskUnit) {
         if (task.tags.isNotEmpty())
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(100.dp),
-                modifier = Modifier.heightIn(50.dp, 150.dp),
-                contentPadding = PaddingValues(end = paddingSmall)
-
+                modifier = Modifier.heightIn(50.dp, 150.dp)
             ) {
                 items(task.tags.size) {
-                    Box(modifier = Modifier.padding(end = paddingSmall)) {
+                    Box(modifier = Modifier.padding(start = paddingSmall)) {
                         Chip(
                             onClick = {
                                 projectListViewModel.updateTagFilter(task.tags[it].id_tag)

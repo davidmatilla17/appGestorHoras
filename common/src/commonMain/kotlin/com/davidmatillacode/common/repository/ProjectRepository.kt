@@ -31,6 +31,8 @@ class ProjectRepository(val db: Database,val taskRepository: TaskRepository) {
             val projectTags =
                 db.tagsSQLQueries.selectProjectTags(project.id_project).executeAsList().map { t ->
                     ListUnit.TagUnit(t.id_tag, t.description)
+                }.sortedBy {
+                    it.id_tag
                 }
             project.tags.addAll(projectTags)
         }
