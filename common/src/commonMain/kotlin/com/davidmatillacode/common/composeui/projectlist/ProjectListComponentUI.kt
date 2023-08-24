@@ -91,7 +91,7 @@ private fun projectDetail(project: ListUnit.ProjectUnit) {
                     modifier = Modifier.heightIn(50.dp, 150.dp).background(backgroundLight)
                 ) {
                     items(project.tags.size) {
-                        Box(modifier = Modifier.padding(start = paddingSmall)) {
+                        Box(modifier = Modifier.padding(start = paddingSmall/2 ,end = paddingSmall / 2)) {
                             Chip(
                                 onClick = {
                                     projectListViewModel.updateTagFilter(project.tags[it].id_tag)
